@@ -21,5 +21,7 @@ Run with Xcode.
 
 `npm run build-web` to generate files in `build/` for production to deploy to `https://foo.bar.com/` , and can use `npx http-server@13.0.2 build` to simply test it at [http://127.0.0.1:8080](http://127.0.0.1:8080) in web browser.
 
+`npm run web-fresh` is needed after change files in `node_modules/`, on Windows need `npm run web-clean` + `npm run web` instead.
+
 ## Refs
 The babylonjs examples are ported from <https://github.com/brianzinn/create-react-app-babylonjs> with few code change like this commit [react -> react-native: `babylonjs Non-Declarative` works well on Android with new version @flyskywhy/react-native-gcanvas support 3d game engine babylonjs](https://github.com/flyskywhy/GCanvasRNExamples/commit/686eb9f).
