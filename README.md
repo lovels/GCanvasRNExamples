@@ -2,6 +2,26 @@
 
 Examples for [@flyskywhy/react-native-gcanvas](https://github.com/flyskywhy/react-native-gcanvas).
 
+* [Canvas 2d Demo](https://github.com/flyskywhy/react-native-gcanvas#2d-canvas)
+
+<img src="https://raw.githubusercontent.com/flyskywhy/react-native-gcanvas/master/assets/canvas.gif" width="480">
+
+* [Webgl 3d Textures](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-3d-textures.html)
+
+<img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/Webgl3dTextures.gif" width="480">
+
+* [Webgl Cube Maps](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-cube-maps.html)
+
+<img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/WebglCubeMaps.gif" width="480">
+
+* [babylonjs Drag and drop](https://brianzinn.github.io/create-react-app-babylonjs/dragNdrop)
+
+<img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/BabylonjsDragNDrop.gif" width="480">
+
+* [babylonjs Non-Declarative](https://brianzinn.github.io/create-react-app-babylonjs/nonDeclarative)
+
+<img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/BabylonjsNonDeclarative.gif" width="480">
+
 ```
 npm install --legacy-peer-deps
 ```
