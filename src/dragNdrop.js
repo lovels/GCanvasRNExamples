@@ -1,5 +1,6 @@
 import React from 'react';
-import { Engine, Scene } from 'react-babylonjs';
+import { View } from 'react-native';
+import { Engine, Scene } from 'react-native-babylonjs';
 import { Vector3, Color3 } from '@babylonjs/core';
 
 // start copy from https://www.babylonjs.com/demos/dragndrop/dragdrop.js
@@ -8,11 +9,9 @@ const validateDrag = (targetPosition) => {
   return Math.max(Math.abs(targetPosition.x), Math.abs(targetPosition.z)) <= (GROUND_SIZE / 2) - 10; // should be -15 for torus
 }
 
-function dragNdrop() {  
+function dragNdrop() {
   return (
-    <div>
-      <div className="row">
-        <div className="col-xs-12 col-md-12">
+    <View style={{flex: 1}}>
           <Engine antialias={true} engineOptions={{preserveDrawingBuffer:true, stencil:true}} canvasId="sample-canvas">
             <Scene clearColor={new Color3(0, 0, 0)}>
             <pointLight name='omni' position={new Vector3(0, 50, 0)} />
@@ -45,9 +44,7 @@ function dragNdrop() {
             </torus>
             </Scene>
           </Engine>
-        </div>
-      </div>
-    </div>
+    </View>
   );
 }
 
