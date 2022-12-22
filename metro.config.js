@@ -19,7 +19,7 @@ module.exports = {
     assetExts: ['dds', 'txt', 'jpg', 'png'],
     sourceExts: ['js', 'json', 'ts', 'tsx', 'jsx'],
     blacklistRE: blacklist([
-      // to avoid error below when `npm run web-clean` besides `npm run rn` on Windows
+      // to avoid node_watcher error below when `npm run web-clean` besides `npm run rn` on Windows
       //events.js:174
       //       throw er; // Unhandled 'error' event
       //       ^
@@ -28,6 +28,9 @@ module.exports = {
       //     at NodeWatcher.<anonymous> (D:\proj\GCanvasRNExamples\node_modules\sane\src\node_watcher.js:291:16)
       //     at FSReqWrap.oncomplete (fs.js:153:21)
       /node_modules\/\.cache/,
+
+      // to avoid node_watcher error when `npm run android` besides `npm run rn` on Windows
+      /node_modules\/.*\/build\/intermediates/,
     ]),
   },
 };
