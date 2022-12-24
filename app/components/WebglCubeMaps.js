@@ -353,8 +353,8 @@ export default class WebglCubeMaps extends Component {
               top: 0,
               zIndex: -100, // -100 should enough to not bother onscreen canvas
             }}
+            offscreenCanvas={true}
             onCanvasCreate={(canvas) => {
-              global.createCanvasElements.push(canvas);
               this.setState({hasOc1: true});
             }}
             devicePixelRatio={1} // should not 1 < devicePixelRatio < 2 as float to avoid pixel offset flaw when GetImageData with PixelsSampler in @flyskywhy/react-native-gcanvas/core/src/support/GLUtil.cpp
