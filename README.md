@@ -14,7 +14,7 @@ Examples for [@flyskywhy/react-native-gcanvas](https://github.com/flyskywhy/reac
 
 <img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/WebglCubeMaps.gif" width="480">
 
-* GIF of [babylonjs Drag and drop](https://brianzinn.github.io/create-react-app-babylonjs/dragNdrop)
+* GIF of [babylonjs multiple touches Drag and drop](https://brianzinn.github.io/create-react-app-babylonjs/dragNdrop)
 
 <img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/BabylonjsDragNDrop.gif" width="480">
 
