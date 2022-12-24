@@ -18,7 +18,7 @@ const validateDrag = (targetPosition) => {
 function dragNdrop() {
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
+      <View style={styles.containerSmall}>
           <Engine antialias={true} engineOptions={{preserveDrawingBuffer:true, stencil:true}} canvasId="sample-canvas">
             <Scene clearColor={new Color3(0, 0, 0)}>
             <pointLight name='omni' position={new Vector3(0, 50, 0)} />
@@ -105,6 +105,11 @@ function dragNdrop() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerSmall: {
+    alignSelf: 'center',
+    width: 200,
+    height: 200,
   },
   linkContainer: {
     alignSelf: 'center',
