@@ -30,7 +30,11 @@ module.exports = {
       /node_modules\/\.cache/,
 
       // to avoid node_watcher error when `npm run android` besides `npm run rn` on Windows
+      /node_modules\/.*\/android\/build/,
       /node_modules\/.*\/build\/intermediates/,
+      /node_modules\/.*\/build\/generated/,
+      /android\/app\/build/,
+      /\.cxx/,
     ]),
   },
 };
