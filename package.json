@@ -6,6 +6,7 @@
     "rn": "adb reverse tcp:8081 tcp:8081; node node_modules/react-native/local-cli/cli.js start",
     "rn-fresh": "adb reverse tcp:8081 tcp:8081; watchman watch-del-all; rm -rf /tmp/react-*; rm -rf /tmp/npm-*; rm -rf /tmp/haste-*; rm -rf /tmp/metro-*; node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "android": "node node_modules/react-native/local-cli/cli.js run-android --no-jetifier",
+    "android-clean": "cross-env ./android/gradlew clean -p ./android/",
     "fast-android": "cross-env ./android/gradlew installDebug --offline -x lint -x lintVitalRelease -p ./android/",
     "fast-android-fresh": "cross-env ./android/gradlew installDebug --rerun-tasks --offline -x lint -x lintVitalRelease -p ./android/",
     "build-android": "cross-env ./android/gradlew assembleRelease --offline -x lint -x lintVitalRelease -p ./android/",
