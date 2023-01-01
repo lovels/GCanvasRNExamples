@@ -58,7 +58,8 @@
     "reactstrap": "^8.4.1",
     "redux": "^4.0.5",
     "resource-loader": "^4.0.0-rc4",
-    "webgl-utils.js": "^1.1.0"
+    "webgl-utils.js": "^1.1.0",
+    "zdog": "1.1.3"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "3.0.1",

@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {GCanvasView} from '@flyskywhy/react-native-gcanvas';
+import Zdog from 'zdog';
+
+var isLooping = false;
+
+let isSpinning = null;
 
 // ref to https://codepen.io/clarke-nicol/pen/OezRdM
-function main() {
+function main(canvas) {
   let illo = new Zdog.Illustration({
-    element: ".zdog-canvas",
+    element: canvas,
     dragRotate: true,
     onDragStart: function() {
       isSpinning = false;
@@ -187,7 +192,8 @@ function main() {
 
   let ticker = 0;
   let cycleCount = 200;
-  let isSpinning = true;
+  // let isSpinning = true;
+  isSpinning = true;
 
   function animate() {
     let progress = ticker / cycleCount;
@@ -200,6 +206,11 @@ function main() {
     ticker++;
 
     illo.updateRenderGraph();
+
+    if (!isLooping) {
+      return;
+    }
+
     requestAnimationFrame( animate );
   }
   animate();
@@ -231,6 +242,11 @@ export default class ZdogAndTests extends Component {
     }
   }
 
+  componentWillUnmount() {
+    isLooping = false;
+    isSpinning = null;
+  }
+
   initCanvas = (canvas) => {
     if (this.canvas) {
       return;
@@ -253,6 +269,13 @@ export default class ZdogAndTests extends Component {
   };
 
   drawSome = async () => {
+    if (isSpinning !== null) {
+      isSpinning = !isSpinning;
+      return;
+    }
+
+    isLooping = true;
+
     // On Android, sometimes this.isGReactTextureViewReady is false e.g.
     // navigate from a canvas page into a drawer item page with
     // react-navigation on Android, the canvas page will be maintain
@@ -260,9 +283,9 @@ export default class ZdogAndTests extends Component {
     // this drawSome() in some loop, it's wasting CPU and GPU,
     // if you don't care about such wasting, you can delete
     // this.isGReactTextureViewReady and related onIsReady.
-    // if (this.isGReactTextureViewReady) {
-    //   main();
-    // }
+    if (this.canvas && this.isGReactTextureViewReady) {
+      main(this.canvas);
+    }
   };
 
   takePicture = () => {
