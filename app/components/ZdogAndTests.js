@@ -396,6 +396,7 @@ export default class ZdogAndTests extends Component {
     this.canvas = null;
     this.state = {
       debugInfo: 'Click me to draw some on canvas',
+      hasOc1: false,
     };
 
     // only useful on Android, because it's always true on iOS
@@ -499,6 +500,23 @@ export default class ZdogAndTests extends Component {
         <TouchableOpacity onPress={this.drawSome}>
           <Text style={styles.welcome}>{this.state.debugInfo}</Text>
         </TouchableOpacity>
+        {Platform.OS !== 'web' && (
+          <GCanvasView
+            style={{
+              width: 1000, // 1000 should enough for offscreen canvas usage
+              height: 1000, // or Dimensions.get('window').height * 2 like https://github.com/flyskywhy/react-native-babylonjs/commit/d5df5d2
+              position: 'absolute',
+              left: 1000, // 1000 should enough to not display on screen means offscreen canvas :P
+              top: 0,
+              zIndex: -100, // -100 should enough to not bother onscreen canvas
+            }}
+            offscreenCanvas={true}
+            onCanvasCreate={(canvas) => this.setState({hasOc1: true})} // it's better to setState some as describe in https://github.com/flyskywhy/react-native-gcanvas/blob/master/README.MD
+            devicePixelRatio={1} // should not 1 < devicePixelRatio < 2 as float to avoid pixel offset flaw when GetImageData with PixelsSampler in @flyskywhy/react-native-gcanvas/core/src/support/GLUtil.cpp
+            isGestureResponsible={false} // who will need gesture with offscreen canvas?
+          />
+        )}
+
         {Platform.OS === 'web' ? (
           <canvas
             id={'canvasExample'}
@@ -510,7 +528,7 @@ export default class ZdogAndTests extends Component {
               } /* canvas with react-native-web can't use width and height in styles.gcanvas */
             }
           />
-        ) : (
+        ) : (this.state.hasOc1 && (
           <GCanvasView
             onCanvasResize={this.onCanvasResize}
             onCanvasCreate={this.initCanvas}
@@ -526,7 +544,7 @@ export default class ZdogAndTests extends Component {
             }
             style={styles.gcanvas}
           />
-        )}
+        ))}
         <TouchableOpacity onPress={this.runTests}>
           <Text style={styles.welcome}>
             Click me runTests react-native-browser-polyfill
