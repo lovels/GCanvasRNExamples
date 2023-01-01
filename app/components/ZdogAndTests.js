@@ -2,6 +2,209 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {GCanvasView} from '@flyskywhy/react-native-gcanvas';
 
+// ref to https://codepen.io/clarke-nicol/pen/OezRdM
+function main() {
+  let illo = new Zdog.Illustration({
+    element: ".zdog-canvas",
+    dragRotate: true,
+    onDragStart: function() {
+      isSpinning = false;
+    },
+    onDragEnd: function() {
+      isSpinning = false;
+    },
+    zoom: 50,
+  });
+
+  var sponge = '#F2CDAC';
+  var icing = '#BF4158';
+  var jam = '#F25D50';
+
+  let cake = new Zdog.Anchor({
+    addTo: illo,
+    visible: true,
+    rotate: { x: -Zdog.TAU/8, y: -Zdog.TAU/18, },
+  });
+
+  let cakeTop = new Zdog.Shape({
+    addTo: cake,
+    path: [
+      { x: 0,    z: -3, },
+      { x: 2.2,  z: -2.2, },
+      { x: 3,    z: 0, },
+      { x: 2.2,  z: 2.2,},
+      { x: 0,    z: 3,},
+      { x: 0,    z: 0, },
+      { x: -2.2, z: 2.2,},
+      { x: -3,   z: 0,},
+      { x: -2.2, z: -2.2,},
+    ],
+    stroke: 10 / illo.zoom,
+    fill: true,
+    color: icing,
+    translate: { y: -0.05, },
+  });
+
+  let cakeBottom = cakeTop.copy({
+    translate: { y: 2, },
+    color: sponge,
+    stroke: 4 / illo.zoom,
+  });
+
+  var sideGroup = new Zdog.Group({
+    addTo: cake,
+    rotate: { y: -Zdog.TAU/18, },
+  });
+
+  let insideLeft = new Zdog.Shape({
+    addTo: cake,
+    path: [
+      { x: -2.2, y: 0.5, z: 2.2,},
+      { x: 0,    y: 0.5, z: 0, },
+      { x: 0,    y: 2, z: 0, },
+      { x: -2.2, y: 2, z: 2.2,},
+    ],
+    stroke: 1 / illo.zoom,
+    fill: true,
+    color: sponge,
+    backface: false,
+    //color: 'red',
+  });
+
+  let insideLeftJam = new Zdog.Shape({
+    addTo: cake,
+    path: [
+      { x: -0.25,    y: 0.9, z: 0.5, },
+      { x: -2.2, y: 0.9, z: 2.35,},
+    ],
+    stroke: 10 / illo.zoom,
+    color: jam,
+  });
+
+  let insideLeftCream = insideLeftJam.copy({
+    addTo: cake,
+    color: 'white',
+    translate: { y: 0.2, },
+  });
+
+  let insideRight = new Zdog.Shape({
+    addTo: cake,
+    path: [
+      { x: 0, y: 1, z: 2.95,},
+      { x: 0, y: 1, z: 0, },
+      { x: 0, y: 2, z: 0, },
+      { x: 0, y: 2, z: 2.95,},
+    ],
+    stroke: 1 / illo.zoom,
+    fill: true,
+    color: sponge,
+    backface: false,
+    //color: 'red',
+  });
+
+  let insideRightJam = new Zdog.Shape({
+    addTo: cake,
+    path: [
+      { x: -0.25, y: 0.9, z: 0.5, },
+      { x: 0, y: 0.9, z: 2.95,},
+    ],
+    stroke: 10 / illo.zoom,
+    color: jam,
+  });
+
+  let insideRightCream = insideRightJam.copy({
+    addTo: cake,
+    color: 'white',
+    translate: { y: 0.2, },
+  });
+
+  let side = new Zdog.Rect({
+    addTo: sideGroup,
+    width: 2.4,
+    height: 2,
+    stroke: 1 / illo.zoom,
+    translate: { x: 0.15, y: 1, z: 2.85, },
+    color: sponge,
+    fill: true,
+  });
+
+  let icingLeft = new Zdog.Ellipse({
+    addTo: side,
+    diameter: 1.2,
+    quarters: 2,
+    stroke: 4 / illo.zoom,
+    color: icing,
+    fill: true,
+    rotate: { z: Zdog.TAU/4, },
+    translate: { x: 0.6, y: -1.02, }
+  });
+
+  let icingRight = icingLeft.copy({
+    translate: { x: -0.6, y: -1.02, },
+  });
+
+  let jamFilling = new Zdog.Shape({
+    addTo: side,
+    path: [
+      { x: -1.15, y: -0.1, z: 0.02,},
+      { x: 1.2,   y: -0.1, z: 0, },
+    ],
+    stroke: 10 / illo.zoom,
+    fill: true,
+    color: jam,
+  });
+
+  let cream = jamFilling.copy({
+    color: 'white',
+    translate: { y: 0.2, },
+  })
+
+  sideGroup.copyGraph({
+    rotate: { y: Zdog.TAU/2.25 },
+  });
+
+  sideGroup.copyGraph({
+    translate: { x: 0.1, z: -0.3, },
+    rotate: { y: Zdog.TAU/3.27, },
+  });
+
+  sideGroup.copyGraph({
+    translate: { x: 0, z: 0, },
+    rotate: { y: -Zdog.TAU/3.27, },
+  });
+  sideGroup.copyGraph({
+    translate: { x: -0.025, z: -0.05, },
+    rotate: { y: -Zdog.TAU/1.24, },
+  });
+  sideGroup.copyGraph({
+    translate: { x: 0.3, z: 0.1, },
+    rotate: { y: Zdog.TAU/1.8, },
+  });
+  sideGroup.copyGraph({
+    translate: { x: -0.1, z: 0.3, },
+    rotate: { y: Zdog.TAU/1.24, },
+  });
+
+  let ticker = 0;
+  let cycleCount = 200;
+  let isSpinning = true;
+
+  function animate() {
+    let progress = ticker / cycleCount;
+    let tween = Zdog.easeInOut( progress % 1, 3 );
+
+    if (isSpinning){
+      illo.rotate.y = tween * -Zdog.TAU;
+    }
+
+    ticker++;
+
+    illo.updateRenderGraph();
+    requestAnimationFrame( animate );
+  }
+  animate();
+}
+
 export default class ZdogAndTests extends Component {
   constructor(props) {
     super(props);
