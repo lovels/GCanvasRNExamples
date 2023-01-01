@@ -11,6 +11,7 @@ import {Button, Platform, StyleSheet, View, StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Canvas2dDemoScreen from './app/components/Canvas2dDemo';
+import ZdogAndTestsScreen from './app/components/ZdogAndTests';
 import Webgl3dTexturesScreen from './app/components/Webgl3dTextures';
 import WebglCubeMapsScreen from './app/components/WebglCubeMaps';
 import DragNDropScreen from './src/dragNdrop';
@@ -28,6 +29,10 @@ function HomeScreen({navigation}) {
       <Button
         title="Canvas 2d Demo"
         onPress={() => navigation.navigate('Canvas2dDemo')}
+      />
+      <Button
+        title="Zdog and Tests"
+        onPress={() => navigation.navigate('ZdogAndTests')}
       />
       <Button
         title="Webgl 3d Textures"
@@ -65,6 +70,11 @@ const App: () => React$Node = () => {
           name="Canvas2dDemo"
           component={Canvas2dDemoScreen}
           options={{title: 'Canvas 2d Demo'}}
+        />
+        <Stack.Screen
+          name="ZdogAndTests"
+          component={ZdogAndTestsScreen}
+          options={{title: 'Zdog and Tests'}}
         />
         <Stack.Screen
           name="Webgl3dTextures"
