@@ -14,6 +14,7 @@ import Canvas2dDemoScreen from './app/components/Canvas2dDemo';
 import ZdogAndTestsScreen from './app/components/ZdogAndTests';
 import Webgl3dTexturesScreen from './app/components/Webgl3dTextures';
 import WebglCubeMapsScreen from './app/components/WebglCubeMaps';
+import PixiScreen from './app/components/Pixi';
 import DragNDropScreen from './src/dragNdrop';
 import NonDeclarativeScreen from './src/nonDeclarative';
 
@@ -41,6 +42,10 @@ function HomeScreen({navigation}) {
       <Button
         title="Webgl Cube Maps"
         onPress={() => navigation.navigate('WebglCubeMaps')}
+      />
+      <Button
+        title="PixiJS"
+        onPress={() => navigation.navigate('PixiJS')}
       />
       <Button
         title="babylonjs Drag and drop"
@@ -85,6 +90,11 @@ const App: () => React$Node = () => {
           name="WebglCubeMaps"
           component={WebglCubeMapsScreen}
           options={{title: 'Webgl Cube Maps'}}
+        />
+        <Stack.Screen
+          name="PixiJS"
+          component={PixiScreen}
+          options={{title: 'PixiJS'}}
         />
         <Stack.Screen
           name="DragNDrop"
