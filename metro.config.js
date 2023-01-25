@@ -35,6 +35,7 @@ module.exports = {
       /node_modules\/.*\/build\/generated/,
       /android\/app\/build/,
       /\.cxx/,
+      /\.transforms/,
     ]),
   },
 };
