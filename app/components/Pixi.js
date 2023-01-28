@@ -69,7 +69,7 @@ export default class Pixi extends Component {
     this.app = new PIXI.Application({
       context: this.ctx,
       devicePixelRatio,
-      backgroundColor: '0x7ed321',
+      backgroundColor: 0x7ed321,
     });
 
     const imageHttpSrc =
