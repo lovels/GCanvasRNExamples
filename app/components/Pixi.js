@@ -11,6 +11,7 @@ export default class Pixi extends Component {
   constructor(props) {
     super(props);
     this.canvas = null;
+    this.app = null;
   }
 
   componentDidMount() {
@@ -25,6 +26,11 @@ export default class Pixi extends Component {
       });
       resizeObserver.observe(document.getElementById('canvasExample'));
     }
+  }
+
+  componentWillUnmount() {
+    // this.app.destroy(false, true);
+    this.app.stop();
   }
 
   initCanvas = (canvas) => {
@@ -56,7 +62,11 @@ export default class Pixi extends Component {
   };
 
   drawSome = async () => {
-    const app = new PIXI.Application({
+    if (this.app) {
+      return;
+    }
+
+    this.app = new PIXI.Application({
       context: this.ctx,
       devicePixelRatio,
       backgroundColor: '0x7ed321',
@@ -78,19 +88,33 @@ export default class Pixi extends Component {
     let spriteHttpLoader;
     let spriteRequireLoader;
 
-    // you can see how to use PIXI.loader in it
-    spriteByResourceLoader();
+    const spriteByResourceLoader = () => {
+      const gameLoop = (delta) => {
+        spriteHttpLoader.y -= 1;
+      };
 
-    // or, use new Image() not PIXI.loader in it
-    // spriteByNewImage();
+      const setup = (loader, resources) => {
+        spriteHttpLoader = new PIXI.Sprite(
+          PIXI.loader.resources[imageHttpSrc].texture,
+        );
 
-    // or, just use PIXI.Sprite.from() in it
-    // spriteByFrom();
+        this.app.stage.addChild(spriteHttpLoader);
+        spriteHttpLoader.y = 700;
 
-    function spriteByResourceLoader() {
+        spriteRequireLoader = new PIXI.Sprite(
+          PIXI.loader.resources[imageRequireAsset.uri].texture,
+        );
+        this.app.stage.addChild(spriteRequireLoader);
+
+        spriteRequireLoader.x = 500;
+        spriteRequireLoader.y = 700;
+
+        this.app.ticker.add((delta) => gameLoop(delta));
+      };
+
       // ref to [Pixi教程](https://github.com/Zainking/learningPixi)
-      PIXI.loader.add(imageHttpSrc); // imageHttpSrc can be simple string url
-      PIXI.loader
+      PIXI.loader.resources[imageHttpSrc] || PIXI.loader.add(imageHttpSrc);
+      PIXI.loader.resources[imageRequireAsset.uri] || PIXI.loader
         .add({
           url: imageRequireAsset.uri,
           // imageRequireAsset must set loadType in this object when build release
@@ -99,57 +123,43 @@ export default class Pixi extends Component {
           // loadType: require('resource-loader').Loader.Resource._loadTypeMap[imageRequireAsset.type],
           // if 'node_modules/pixi.js/node_modules/resource-loader' is which pixi.js depends on, then
           loadType: require('pixi.js/node_modules/resource-loader').Loader.Resource._loadTypeMap[imageRequireAsset.type],
-        })
-        .load(setup);
+        });
+      PIXI.loader.load(setup);
+    };
 
-      function setup(loader, resources) {
-        spriteHttpLoader = new PIXI.Sprite(
-          PIXI.loader.resources[imageHttpSrc].texture,
-        );
-
-        app.stage.addChild(spriteHttpLoader);
-        spriteHttpLoader.y = 700;
-
-        spriteRequireLoader = new PIXI.Sprite(
-          PIXI.loader.resources[imageRequireAsset.uri].texture,
-        );
-        app.stage.addChild(spriteRequireLoader);
-
-        spriteRequireLoader.x = 500;
-        spriteRequireLoader.y = 700;
-
-        app.ticker.add((delta) => gameLoop(delta));
-      }
-
-      function gameLoop(delta) {
-        spriteHttpLoader.y -= 1;
-      }
-    }
-
-    function spriteByNewImage() {
-      const imageRequire = new Image();
-      imageRequire.onload = setup;
-      imageRequire.src = imageRequireAsset.uri;
-
-      function setup(loader, resources) {
+    const spriteByNewImage = () => {
+      const setup = (loader, resources) => {
         new PIXI.Texture.fromLoader(imageRequire, imageRequire.src);
         spriteRequireLoader = new PIXI.Sprite(
           PIXI.utils.TextureCache[imageRequireAsset.uri],
         );
-        app.stage.addChild(spriteRequireLoader);
+        this.app.stage.addChild(spriteRequireLoader);
 
         spriteRequireLoader.x = 500;
         spriteRequireLoader.y = 700;
-      }
-    }
+      };
 
-    async function spriteByFrom() {
+      const imageRequire = new Image();
+      imageRequire.onload = setup;
+      imageRequire.src = imageRequireAsset.uri;
+    };
+
+    const spriteByFrom = async () => {
       spriteRequireLoader = PIXI.Sprite.from(imageRequireAsset.uri);
-      app.stage.addChild(spriteRequireLoader);
+      this.app.stage.addChild(spriteRequireLoader);
 
       spriteRequireLoader.x = 500;
       spriteRequireLoader.y = 700;
-    }
+    };
+
+    // you can see how to use PIXI.loader in it
+    spriteByResourceLoader();
+
+    // or, use new Image() not PIXI.loader in it
+    // spriteByNewImage();
+
+    // or, just use PIXI.Sprite.from() in it
+    // spriteByFrom();
   };
 
   render() {
