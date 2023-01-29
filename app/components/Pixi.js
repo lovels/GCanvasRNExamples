@@ -1,8 +1,17 @@
 import React, {Component} from 'react';
 import {PixelRatio, Platform, StyleSheet, View} from 'react-native';
 import {GCanvasView} from '@flyskywhy/react-native-gcanvas';
-import {PIXI} from 'react-native-pixi';
 import {Asset} from 'expo-asset';
+
+import * as PixiInstance from 'pixi.js';
+
+// you may need these 2 lines
+// global.PIXI = global.PIXI || PixiInstance;
+// let PIXI = global.PIXI;
+
+// you may need these 2 lines in pixi.js@4.8.9
+// import * as filters from 'pixi-filters';
+// PIXI.filters = {...(PIXI.filters || {}), ...filters};
 
 // for game, 1 is more better than PixelRatio.get() to code with physical pixels
 const devicePixelRatio = 1;
@@ -71,16 +80,12 @@ export default class Pixi extends Component {
     }
 
     this.app = new PIXI.Application({
-      // context: Platform.OS !== 'web' && this.ctx,
-      // view: Platform.OS === 'web' && this.canvas,
-      // If Platform.OS === 'web', if forceCanvas is true, must use `view: this.canvas` instead of `context: this.ctx`,
-      // otherwise even no backgroundColor be seen.
-      // If Platform.OS !== 'web', must use `view: this.canvas` or `context: this.ctx` or `width: , height: `,
-      // otherwise backgroundColor is broken apart if forceCanvas is true, or spriteHttpLoader is too below if forceCanvas is false.
-      view: this.canvas,
+      // If Platform.OS === 'web', must use `view: this.canvas` instead of `context: this.ctx`.
+      // If Platform.OS !== 'web', can just use `width: , height: `.
+      view: Platform.OS === 'web' && this.canvas,
       forceCanvas,
-      // width: this.canvas.clientWidth * PixelRatio.get() / devicePixelRatio | 0,
-      // height: this.canvas.clientHeight * PixelRatio.get() / devicePixelRatio | 0,
+      width: this.canvas.clientWidth * PixelRatio.get() / devicePixelRatio | 0,
+      height: this.canvas.clientHeight * PixelRatio.get() / devicePixelRatio | 0,
       devicePixelRatio,
       backgroundColor: 0x7ed321,
     });
