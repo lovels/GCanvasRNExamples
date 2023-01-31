@@ -18,6 +18,10 @@ Examples for [@flyskywhy/react-native-gcanvas](https://github.com/flyskywhy/reac
 
 <img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/WebglCubeMaps.gif" width="480">
 
+* GIF of Pixi using pixi.js-legacy@7 (also can easily modify some to use @4 @5 @6 just follow the comments in <https://github.com/flyskywhy/GCanvasRNExamples/blob/master/app/components/Pixi.js>)
+
+<img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/Pixi.gif" width="480">
+
 * GIF of [babylonjs multiple touches Drag and drop](https://brianzinn.github.io/create-react-app-babylonjs/dragNdrop)
 
 <img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/BabylonjsDragNDrop.gif" width="480">
