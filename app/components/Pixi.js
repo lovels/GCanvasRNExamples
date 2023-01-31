@@ -19,7 +19,7 @@ import * as PIXI from 'pixi.js-legacy';
 // you may need this line
 // global.PIXI = global.PIXI || PIXI;
 
-// you may need these 2 lines or not in pixi.js@4.8.9
+// you may need these 2 lines or not in pixi.js@4.8.9 (npm install --legacy-peer-deps pixi-filters@2.7.1)
 // import * as filters from 'pixi-filters';
 // PIXI.filters = {...(PIXI.filters || {}), ...filters};
 
