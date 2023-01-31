@@ -8,8 +8,9 @@ import {Asset} from 'expo-asset';
 // need 'pixi.js', and forceCanvas can be true or false
 // import * as PIXI from 'pixi.js';
 
-// for pixi.js@5
-//     npm install --legacy-peer-deps pixi.js@5.3.12 pixi.js-legacy@5.3.12
+// for pixi.js@5 @6
+//     npm install --legacy-peer-deps pixi.js@5 pixi.js-legacy@5
+//     npm install --legacy-peer-deps pixi.js@6 pixi.js-legacy@6
 // need 'pixi.js-legacy' cause demo here only support forceCanvas be true, TODO be false
 import * as PIXI from 'pixi.js-legacy';
 
@@ -20,7 +21,7 @@ import * as PIXI from 'pixi.js-legacy';
 // import * as filters from 'pixi-filters';
 // PIXI.filters = {...(PIXI.filters || {}), ...filters};
 
-// pixi.js@5 pixiLoader.add() need this to avoid `ERROR    ReferenceError: Can't find variable: XMLDocument`
+// pixi.js@5 @6 pixiLoader.add() need this to avoid `ERROR    ReferenceError: Can't find variable: XMLDocument`
 global.XMLDocument = global.XMLDocument || function () {};
 
 // for game, 1 is more better than PixelRatio.get() to code with physical pixels
@@ -116,7 +117,7 @@ export default class Pixi extends Component {
     let spriteRequireLoader;
 
     // const pixiLoader = PIXI.loader; // pixi.js@4.8.9 need this
-    const pixiLoader = PIXI.Loader.shared; // pixi.js@5 need this
+    const pixiLoader = PIXI.Loader.shared; // pixi.js@5 @6 need this
 
     const spriteByResourceLoader = () => {
       const gameLoop = (delta) => {
@@ -154,7 +155,7 @@ export default class Pixi extends Component {
           // if 'node_modules/pixi.js/node_modules/resource-loader' is which being depended on, then
           // loadType: require('pixi.js/node_modules/resource-loader').Loader.Resource._loadTypeMap[imageRequireAsset.type], // pixi.js@4.8.9 need this
           // if 'node_modules/@pixi/loaders' is which being depended on, then
-          loadType: require('@pixi/loaders').LoaderResource._loadTypeMap[imageRequireAsset.type], // pixi.js@5 need this
+          loadType: require('@pixi/loaders').LoaderResource._loadTypeMap[imageRequireAsset.type], // pixi.js@5 @6 need this
         });
       pixiLoader.load(setup);
     };
