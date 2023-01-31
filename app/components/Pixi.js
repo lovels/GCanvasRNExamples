@@ -3,21 +3,31 @@ import {PixelRatio, Platform, StyleSheet, View} from 'react-native';
 import {GCanvasView} from '@flyskywhy/react-native-gcanvas';
 import {Asset} from 'expo-asset';
 
-import * as PixiInstance from 'pixi.js';
+// for pixi.js@4.8.9
+//     npm install --legacy-peer-deps pixi.js@4.8.9
+// need 'pixi.js', and forceCanvas can be true or false
+// import * as PIXI from 'pixi.js';
 
-// you may need these 2 lines
-// global.PIXI = global.PIXI || PixiInstance;
-// let PIXI = global.PIXI;
+// for pixi.js@5
+//     npm install --legacy-peer-deps pixi.js@5.3.12 pixi.js-legacy@5.3.12
+// need 'pixi.js-legacy' cause demo here only support forceCanvas be true, TODO be false
+import * as PIXI from 'pixi.js-legacy';
 
-// you may need these 2 lines in pixi.js@4.8.9
+// you may need this line
+// global.PIXI = global.PIXI || PIXI;
+
+// you may need these 2 lines or not in pixi.js@4.8.9
 // import * as filters from 'pixi-filters';
 // PIXI.filters = {...(PIXI.filters || {}), ...filters};
+
+// pixi.js@5 pixiLoader.add() need this to avoid `ERROR    ReferenceError: Can't find variable: XMLDocument`
+global.XMLDocument = global.XMLDocument || function () {};
 
 // for game, 1 is more better than PixelRatio.get() to code with physical pixels
 const devicePixelRatio = 1;
 
 // PIXI default getContext 'webgl', or you can let it getContext '2d' instead against `forceCanvas = true`
-const forceCanvas = false;
+const forceCanvas = true;
 
 export default class Pixi extends Component {
   constructor(props) {
@@ -105,6 +115,9 @@ export default class Pixi extends Component {
     let spriteHttpLoader;
     let spriteRequireLoader;
 
+    // const pixiLoader = PIXI.loader; // pixi.js@4.8.9 need this
+    const pixiLoader = PIXI.Loader.shared; // pixi.js@5 need this
+
     const spriteByResourceLoader = () => {
       const gameLoop = (delta) => {
         spriteHttpLoader.y -= 1;
@@ -112,14 +125,14 @@ export default class Pixi extends Component {
 
       const setup = (loader, resources) => {
         spriteHttpLoader = new PIXI.Sprite(
-          PIXI.loader.resources[imageHttpSrc].texture,
+          pixiLoader.resources[imageHttpSrc].texture,
         );
 
         this.app.stage.addChild(spriteHttpLoader);
         spriteHttpLoader.y = 700;
 
         spriteRequireLoader = new PIXI.Sprite(
-          PIXI.loader.resources[imageRequireAsset.uri].texture,
+          pixiLoader.resources[imageRequireAsset.uri].texture,
         );
         this.app.stage.addChild(spriteRequireLoader);
 
@@ -130,18 +143,20 @@ export default class Pixi extends Component {
       };
 
       // ref to [Pixi教程](https://github.com/Zainking/learningPixi)
-      PIXI.loader.resources[imageHttpSrc] || PIXI.loader.add(imageHttpSrc);
-      PIXI.loader.resources[imageRequireAsset.uri] || PIXI.loader
+      pixiLoader.resources[imageHttpSrc] || pixiLoader.add(imageHttpSrc);
+      pixiLoader.resources[imageRequireAsset.uri] || pixiLoader
         .add({
           url: imageRequireAsset.uri,
           // imageRequireAsset must set loadType in this object when build release
           //
-          // if 'node_modules/resource-loader' is which pixi.js depends on, then
+          // if 'node_modules/resource-loader' is which being depended on, then
           // loadType: require('resource-loader').Loader.Resource._loadTypeMap[imageRequireAsset.type],
-          // if 'node_modules/pixi.js/node_modules/resource-loader' is which pixi.js depends on, then
-          loadType: require('pixi.js/node_modules/resource-loader').Loader.Resource._loadTypeMap[imageRequireAsset.type],
+          // if 'node_modules/pixi.js/node_modules/resource-loader' is which being depended on, then
+          // loadType: require('pixi.js/node_modules/resource-loader').Loader.Resource._loadTypeMap[imageRequireAsset.type], // pixi.js@4.8.9 need this
+          // if 'node_modules/@pixi/loaders' is which being depended on, then
+          loadType: require('@pixi/loaders').LoaderResource._loadTypeMap[imageRequireAsset.type], // pixi.js@5 need this
         });
-      PIXI.loader.load(setup);
+      pixiLoader.load(setup);
     };
 
     const spriteByNewImage = () => {
@@ -169,10 +184,10 @@ export default class Pixi extends Component {
       spriteRequireLoader.y = 700;
     };
 
-    // you can see how to use PIXI.loader in it
+    // you can see how to use pixiLoader in it
     spriteByResourceLoader();
 
-    // or, use new Image() not PIXI.loader in it
+    // or, use new Image() not pixiLoader in it
     // spriteByNewImage();
 
     // or, just use PIXI.Sprite.from() in it
@@ -199,7 +214,7 @@ export default class Pixi extends Component {
             onCanvasResize={this.onCanvasResize}
             onCanvasCreate={this.initCanvas}
             devicePixelRatio={devicePixelRatio}
-            offscreenCanvas={true}
+            offscreenCanvas={true} // so that can be document.createElement('canvas') in PIXI lib
           />
         )}
       </View>
