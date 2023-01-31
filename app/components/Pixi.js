@@ -3,6 +3,8 @@ import {PixelRatio, Platform, StyleSheet, View} from 'react-native';
 import {GCanvasView} from '@flyskywhy/react-native-gcanvas';
 import {Asset} from 'expo-asset';
 
+import 'intl'; // pixi.js@7 need this
+
 // for pixi.js@4.8.9
 //     npm install --legacy-peer-deps pixi.js@4.8.9
 // need 'pixi.js', and forceCanvas can be true or false
@@ -116,8 +118,27 @@ export default class Pixi extends Component {
     let spriteHttpLoader;
     let spriteRequireLoader;
 
+    const spriteByPixi7Assets = async () => {
+      const gameLoop = (delta) => {
+        spriteHttpLoader.y -= 1;
+      };
+
+      const textureHttp = await PIXI.loadTextures.load(imageHttpSrc, {});
+      spriteHttpLoader = new PIXI.Sprite(textureHttp);
+      this.app.stage.addChild(spriteHttpLoader);
+      spriteHttpLoader.y = 700;
+
+      const textureRequire = await PIXI.loadTextures.load(imageRequireAsset.uri, {});
+      spriteRequireLoader = new PIXI.Sprite(textureRequire);
+      this.app.stage.addChild(spriteRequireLoader);
+      spriteRequireLoader.x = 500;
+      spriteRequireLoader.y = 700;
+
+      this.app.ticker.add((delta) => gameLoop(delta));
+    };
+
     // const pixiLoader = PIXI.loader; // pixi.js@4.8.9 need this
-    const pixiLoader = PIXI.Loader.shared; // pixi.js@5 @6 need this
+    const pixiLoader = PIXI.Loader && PIXI.Loader.shared; // pixi.js@5 @6 need this
 
     const spriteByResourceLoader = () => {
       const gameLoop = (delta) => {
@@ -185,14 +206,17 @@ export default class Pixi extends Component {
       spriteRequireLoader.y = 700;
     };
 
+    // you can see how to use PIXI.Assets in it
+    spriteByPixi7Assets(); // pixi.js@7 can use this
+
     // you can see how to use pixiLoader in it
-    spriteByResourceLoader();
+    // spriteByResourceLoader(); pixi.js@4 @5 @6 can use this
 
     // or, use new Image() not pixiLoader in it
-    // spriteByNewImage();
+    // spriteByNewImage(); // pixi.js@4 @5 @6 @7 can use this
 
     // or, just use PIXI.Sprite.from() in it
-    // spriteByFrom();
+    // spriteByFrom(); // pixi.js@4 @5 @6 @7 can use this
   };
 
   render() {
