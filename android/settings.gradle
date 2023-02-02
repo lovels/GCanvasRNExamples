@@ -1,6 +1,4 @@
 rootProject.name = 'GCanvasRNExamples'
-apply from: '../node_modules/react-native-unimodules/gradle.groovy'
-includeUnimodulesProjects()
 
 include ':android:gcanvas_library'
 project(':android:gcanvas_library').projectDir = new File(rootProject.projectDir, '../node_modules/@flyskywhy/react-native-gcanvas/android/gcanvas_library')

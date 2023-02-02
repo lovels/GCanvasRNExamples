@@ -57,6 +57,3 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-
-# other
-/android/app/src/main/java/com/*/generated/BasePackageList.java
