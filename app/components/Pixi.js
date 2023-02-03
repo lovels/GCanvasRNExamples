@@ -176,7 +176,7 @@ export default class Pixi extends Component {
           // if 'node_modules/pixi.js/node_modules/resource-loader' is which being depended on, then
           // loadType: require('pixi.js/node_modules/resource-loader').Loader.Resource._loadTypeMap[imageRequireAsset.type], // pixi.js@4.8.9 need this
           // if 'node_modules/@pixi/loaders' is which being depended on, then
-          loadType: require('@pixi/loaders').LoaderResource._loadTypeMap[imageRequireAsset.type], // pixi.js@5 @6 need this
+          // loadType: require('@pixi/loaders').LoaderResource._loadTypeMap[imageRequireAsset.type], // pixi.js@5 @6 need this
         });
       pixiLoader.load(setup);
     };
