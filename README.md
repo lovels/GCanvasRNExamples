@@ -1,3 +1,20 @@
+### Update 在 iOS 设备运行
+1. 将本地的 `ruby` 版本切换到 2.7.5，`rvm use 2.7.5`
+2. 默认本地有 `cocoapods` 环境，如果没有，请自行安装。将 `Gemfile` 中 `cocoapods` 安装注释，
+   ```
+   # gem 'cocoapods', '~> 1.11', '>= 1.11.2'
+   ```
+3. 修改 iOS 最低运行版本为 13.0，修改 `ios/Podfile` 文件如下：
+    ```
+    platform :ios, '13.0'
+
+    pod "GCanvas", :path => "../node_modules/@flyskywhy/react-native-gcanvas/GCanvas.podspec"
+    ```
+5. 在项目根目录执行 `npm install --legacy-peer-deps --registry https://registry.npm.taobao.org
+`
+6. `cd ios/` 执行 `pod install`
+7. 用 Xcode 运行 iOS 项目，注意 `RCTGCanvasModule.m` 中方法 `setDevicePixelRatio:ratio:` 报错没有返回值，在该方法最后补充 `return nil;`
+
 # GCanvas React Native Examples
 
 Examples for [@flyskywhy/react-native-gcanvas](https://github.com/flyskywhy/react-native-gcanvas).
