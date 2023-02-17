@@ -1,5 +1,21 @@
 # GCanvas React Native Examples
 
+### Update 在 iOS 设备运行
+1. 默认本地有 pod 环境，将 Gemfile 中 cocoapods 安装注释
+   ```
+   # gem 'cocoapods', '~> 1.11', '>= 1.11.2'
+   ```
+2. `cd ios/` 修改 Podfile 文件如下：
+    ```
+    platform :ios, '13.0'
+    
+    pod "GCanvas", :path => "../node_modules/@flyskywhy/react-native-gcanvas/GCanvas.podspec"
+    ```
+3. 在项目根目录执行 `npm install --legacy-peer-deps --registry https://registry.npm.taobao.org
+`
+4. `cd ios/` 执行 `pod install`
+
+
 Examples for [@flyskywhy/react-native-gcanvas](https://github.com/flyskywhy/react-native-gcanvas).
 
 * GIF of [Canvas 2d Demo](https://github.com/flyskywhy/react-native-gcanvas#2d-canvas)
